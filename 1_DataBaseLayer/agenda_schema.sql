@@ -7,5 +7,6 @@ create table if not exists agenda(
     house_phone varchar(100) not null,
     mobile_phone varchar(100) not null,
     email varchar(200) not null,
+    avatar varchar(255) not null,
     primary key(id)
 );
