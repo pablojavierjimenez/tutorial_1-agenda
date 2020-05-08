@@ -2,60 +2,88 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+	"reflect"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type Persons struct {
-	id           int    `json:id`
-	full_names   string `json:name`
-	direction    string `json:addres`
-	house_phone  int    `json:housePhone`
-	mobile_phone int    `json:mobilePhone`
-	email        string `json:email`
-	avatar       string `json:avatar`
+/**
++ Creamos los entidades(?
+*/
+type Person struct {
+	Id        int    `json:"id"`
+	Names     string `json:"name"`
+	Direction string `json:"addres"`
+	Phone     int    `json:"housePhone"`
+	Mobile    int    `json:"mobilePhone"`
+	Email     string `json:"email"`
+	Avatar    string `json:"avatar"`
 }
 
-func main() {
+type Persons []Person
 
-	fmt.Println("Go MySQL Connection")
-
-	// esta linea no funciono porque inclui el password como en el tutorial,
-	// pero mi base dedatos no usa password,
-	// pero la dejo comentada para futuras referencias
-	// db, err := sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/agenda")
+// Conectamos con la base de datos
+func databaseConnection() (*sql.DB, error) {
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/agendaDB")
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Println(reflect.TypeOf(db))
+
+	return db, err
+}
+
+/**
++ Controlles
+*/
+func homeController(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hola gente esta es la home")
+	fmt.Println("alguien accedio a la home")
+}
+
+func agendaController(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("alguien accedio a AGENDA")
+
+	index := 0
+	agenda := make([]Person, 0, 10)
+	queryString := "SELECT * FROM `persons` LIMIT 10"
+	connection, err := databaseConnection()
 
 	if err != nil {
 		panic(err.Error())
 	}
 
-	result, err := db.Query("SELECT * FROM `persons` LIMIT 10")
+	data, err := connection.Query(queryString)
 
 	if err != nil {
 		panic(err.Error())
 	}
 
-	for result.Next() {
-		var person Persons
-
-		err = result.Scan(&person.id, &person.full_names, &person.direction, &person.house_phone, &person.mobile_phone, &person.email, &person.avatar)
+	for data.Next() {
+		index++
+		var person Person
+		err = data.Scan(&person.Id, &person.Names, &person.Direction, &person.Phone, &person.Mobile, &person.Email, &person.Avatar)
 		if err != nil {
 			panic(err.Error())
 		}
-
-		fmt.Println(person)
+		agenda = append(agenda, person)
 	}
-	// insertString := "INSERT INTO agenda (`full_names`,`direction`,`house_phone`,`mobile_phone`,`email`)VALUES ('marcos rosi','giñu 9486',45693873,11563564325,'marcos.rosi@company.com')"
 
-	// insert, err := db.Query(insertString)
+	fmt.Println(agenda)
+	json.NewEncoder(w).Encode(agenda)
+}
 
-	// if err != nil {
-	// 	panic(err.Error())
-	// }
+func routesHandler() {
+	http.HandleFunc("/", homeController)
+	http.HandleFunc("/agenda", agendaController)
+	log.Fatal(http.ListenAndServe(":8081", nil))
+}
 
-	// defer insert.Close()
-
-	// fmt.Println("Successfully incerted database")
+func main() {
+	routesHandler()
 }
