@@ -1,12 +1,21 @@
-create database if not exists agenda;
-use agenda;
-create table if not exists agenda(
-    id bigint unsigned not null auto_increment,
-    full_names varchar(100) not null,
-    direction varchar(255) not null,
-    house_phone varchar(100) not null,
-    mobile_phone varchar(100) not null,
-    email varchar(200) not null,
-    avatar varchar(255) not null,
-    primary key(id)
-);
+--
+-- Base de datos: `agendaDB`
+--
+create database if not exists agendaDB;
+
+use agendaDB;
+---------------------------
+
+--
+-- Estructura de tabla para la tabla `persons`
+--
+CREATE TABLE `persons` (
+  `id` bigint unsigned not null auto_increment,
+  `name` varchar(100) NOT NULL,
+  `direction` varchar(255) NOT NULL,
+  `housePhone` varchar(100) NOT NULL,
+  `mobilePhone` varchar(100) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  primary key(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
