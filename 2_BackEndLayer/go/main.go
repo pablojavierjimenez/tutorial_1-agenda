@@ -80,6 +80,6 @@ func routesHandler() {
 
 func main() {
 	routesHandler()
-	fmt.Println("Server running on: localhost:8081")
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	fmt.Println("Server running on: localhost:9000")
+	log.Fatal(http.ListenAndServe(":9000", nil))
 }
