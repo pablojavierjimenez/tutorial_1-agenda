@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"reflect"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -32,8 +31,6 @@ func databaseConnection() (*sql.DB, error) {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Println(reflect.TypeOf(db))
-
 	return db, err
 }
 
@@ -41,13 +38,12 @@ func databaseConnection() (*sql.DB, error) {
 + Controlles
 */
 func homeController(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("recived request to: /")
 	fmt.Fprintf(w, "Hola gente esta es la home")
-	fmt.Println("alguien accedio a la home")
 }
 
 func agendaController(w http.ResponseWriter, r *http.Request) {
-
-	fmt.Println("alguien accedio a AGENDA")
+	fmt.Println("recived request to: /agenda")
 
 	index := 0
 	agenda := make([]Person, 0, 10)
@@ -74,16 +70,16 @@ func agendaController(w http.ResponseWriter, r *http.Request) {
 		agenda = append(agenda, person)
 	}
 
-	fmt.Println(agenda)
 	json.NewEncoder(w).Encode(agenda)
 }
 
 func routesHandler() {
 	http.HandleFunc("/", homeController)
 	http.HandleFunc("/agenda", agendaController)
-	log.Fatal(http.ListenAndServe(":8081", nil))
 }
 
 func main() {
 	routesHandler()
+	fmt.Println("Server running on: localhost:8081")
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }
