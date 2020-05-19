@@ -46,9 +46,18 @@ finally:
 ----
 
 ## Create server
-[Link al video tutorial](https://youtu.be/wd8zf3D0jic)
+[Link al video tutorial](https://www.afternerd.com/blog/python-http-server/)
 ```Python
 #example
+import http.server
+import socketserver
+
+PORT = 6080
+Handler = http.server.SimpleHTTPRequestHandler
+
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    print("serving at port", PORT)
+    httpd.serve_forever()
 ```
 ----
 ## Create router with without Flask
