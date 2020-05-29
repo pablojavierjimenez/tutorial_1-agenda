@@ -15,8 +15,8 @@ async function isPersonDataValis(personData:IPerson ):Promise<boolean> {
     )
     && (
       (
-        personData.direction != undefined
-        && personData.direction != ""
+        personData.address != undefined
+        && personData.address != ""
         )
         || (
           personData.housePhone != ""

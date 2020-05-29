@@ -1,7 +1,7 @@
 export interface IPerson {
     id?: number;
     name: string;
-    direction: string;
+    address: string;
     housePhone: string;
     mobilePhone: string;
     email: string;

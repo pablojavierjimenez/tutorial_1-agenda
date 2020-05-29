@@ -5,7 +5,7 @@ import isDbConnectionSuccess from "../helpers/testDbConnection.ts";
 const mydbConfig = {
   hostname: "127.0.0.1",
   username: "root",
-  db: "agendaDB",
+  db: "contactListDB",
   password: "",
 };
 const Mysql = await new Client().connect(mydbConfig);

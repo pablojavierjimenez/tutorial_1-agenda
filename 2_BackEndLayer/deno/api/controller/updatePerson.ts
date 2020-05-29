@@ -11,9 +11,9 @@ import personExist from "../helpers/personExist.ts";
  */
 async function _updatePersonData(newPersonData:IPerson, personId:number):Promise<any> {
   try {
-    const result = await Mysql.execute("UPDATE `persons` SET name=?, direction=?, housePhone=?, mobilePhone=?, email=?, avatar=? WHERE id=?", [
+    const result = await Mysql.execute("UPDATE `persons` SET name=?, address=?, housePhone=?, mobilePhone=?, email=?, avatar=? WHERE id=?", [
       newPersonData.name,
-      newPersonData.direction,
+      newPersonData.address,
       newPersonData.housePhone,
       newPersonData.mobilePhone,
       newPersonData.email,

@@ -11,7 +11,7 @@ app = Flask(__name__)
 mydb = None
 connection_config_dict = {
     'host':'localhost',
-    'database':'agendaDB',
+    'database':'contactListDB',
     'user':'root',
     'password':''
 }

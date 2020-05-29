@@ -11,10 +11,9 @@ import isPersonDataValis from "../helpers/isPersonDataValid.ts";
  */
 async function _insertNewPerson(newPerson: IPerson):Promise<any> {
   if (await isPersonDataValis(newPerson)) {
-    console.log('entro')
-    const result = await Mysql.execute("INSERT INTO `persons` (name, direction, housePhone, mobilePhone, email, avatar) VALUES (?,?,?,?,?,?)", [
+    const result = await Mysql.execute("INSERT INTO `persons` (name, address, housePhone, mobilePhone, email, avatar) VALUES (?,?,?,?,?,?)", [
       newPerson.name,
-      newPerson.direction,
+      newPerson.address,
       newPerson.housePhone,
       newPerson.mobilePhone,
       newPerson.email,

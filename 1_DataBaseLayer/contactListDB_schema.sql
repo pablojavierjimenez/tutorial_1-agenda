@@ -1,9 +1,9 @@
 --
--- Base de datos: `agendaDB`
+-- Base de datos: `contactListDB`
 --
-create database if not exists agendaDB;
+create database if not exists contactListDB;
 
-use agendaDB;
+use contactListDB;
 ---------------------------
 
 --
@@ -12,7 +12,7 @@ use agendaDB;
 CREATE TABLE `persons` (
   `id` bigint unsigned not null auto_increment,
   `name` varchar(100) NOT NULL,
-  `direction` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
   `housePhone` varchar(100) NOT NULL,
   `mobilePhone` varchar(100) NOT NULL,
   `email` varchar(200) NOT NULL,

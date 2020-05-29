@@ -3,7 +3,7 @@
 $server = "127.0.0.1";
 $user = "root";
 $password = "";
-$database = "agendaDB";
+$database = "contactListDB";
 $port = "3306";
 
 // Create a connection
